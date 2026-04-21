@@ -53,12 +53,8 @@
     }
 
     @keyframes piscar {
-      0%, 100% {
-        color: red;
-      }
-      50% {
-        color: transparent;
-      }
+      0%, 100% { color: red; }
+      50% { color: transparent; }
     }
 
     p {
@@ -79,9 +75,7 @@
       font-size: 0.95rem;
     }
 
-    input[type="text"],
-    input[type="email"],
-    input[type="tel"] {
+    input {
       padding: 10px;
       border: 1px solid #ccc;
       border-radius: 6px;
@@ -109,36 +103,56 @@
     <h1>Parabéns!</h1>
     <p>Você foi selecionado para ganhar um Gift Card de <strong>R$100</strong>!</p>
     <p>Preencha os dados abaixo para resgatar seu prêmio:</p>
+
     <form id="giftForm">
-      <label for="nome">Nome completo:</label>
-      <input type="text" id="nome" name="nome" required />
+      <label>Nome completo:</label>
+      <input type="text" id="nome" required />
 
-      <label for="email">E-mail:</label>
-      <input type="email" id="email" name="email" required />
+      <label>E-mail:</label>
+      <input type="email" id="email" required />
 
-      <label for="telefone">Telefone:</label>
-      <input type="tel" id="telefone" name="telefone" placeholder="(99) 99999-9999" required />
+      <label>Telefone:</label>
+      <input type="tel" id="telefone" placeholder="(99) 99999-9999" required />
 
-      <label for="cpf">CPF:</label>
-      <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" required />
+      <label>CPF:</label>
+      <input 
+        type="text" 
+        id="cpf" 
+        placeholder="000.000.000-00"
+        maxlength="11"
+        inputmode="numeric"
+        required
+      />
 
       <input type="submit" value="Resgatar Gift Card" />
     </form>
   </div>
 
   <script>
+    const cpfInput = document.getElementById('cpf');
+
+    // Permite apenas números
+    cpfInput.addEventListener('input', () => {
+      cpfInput.value = cpfInput.value.replace(/\D/g, '');
+    });
+
     document.getElementById('giftForm').addEventListener('submit', function(e) {
       e.preventDefault();
 
       const nome = document.getElementById('nome').value.trim();
       const email = document.getElementById('email').value.trim();
       const telefone = document.getElementById('telefone').value.trim();
-      const cpf = document.getElementById('cpf').value.trim();
+      const cpf = cpfInput.value.trim();
+
+      if (cpf.length !== 11) {
+        alert('CPF deve conter exatamente 11 números.');
+        return;
+      }
 
       if (nome && email && telefone && cpf) {
         window.location.href = 'https://youtube.com/shorts/rLowlHIj7Qk?si=EdpdKZxVuXubtNk_';
       } else {
-        alert('Por favor, preencha todos os campos corretamente.');
+        alert('Preencha todos os campos corretamente.');
       }
     });
   </script>
